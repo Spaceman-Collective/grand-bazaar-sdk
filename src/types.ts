@@ -11,9 +11,10 @@ export interface MintItemCollectionProps {
     game: {
         gamePdaAddress: web3.PublicKey,
         gameMintKey: web3.PublicKey,
-        gameATA: Account
+        gameATA: web3.PublicKey
     },
     item: {
+        itemId: bigint,
         name: string,
         symbol: string,
         uri: string

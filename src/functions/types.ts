@@ -1,9 +1,9 @@
-import { BN, web3 } from "@coral-xyz/anchor";
+import { web3 } from "@coral-xyz/anchor";
 
 export type InitializedGameType = {
-  gamePdaAddress: any,
-  gameMintKey: any,
-  gameATA: any
+  gamePdaAddress: web3.PublicKey,
+  gameMintKey: web3.PublicKey,
+  gameATA: web3.PublicKey
 }
 
 export type MintedCollection = {

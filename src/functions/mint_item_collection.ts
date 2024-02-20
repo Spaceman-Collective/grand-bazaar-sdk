@@ -13,6 +13,7 @@ interface MintItemCollection {
   gameId: bigint,
   game: InitializedGameType,
   item: {
+    itemId: bigint,
     name: string,
     symbol: string,
     uri: string
@@ -23,7 +24,6 @@ const mintItemCollectionLogic = async (
   { connection, signerBuffer, game, MPLProgram, program, gameId, item }: MintItemCollection
 ) => {
   const SIGNER = web3.Keypair.fromSecretKey(signerBuffer);
-  const metadata = item;
 
   const itemMintKey = await createMint(connection, SIGNER, game.gamePdaAddress, game.gamePdaAddress, 0);
   const metadataAccount = web3.PublicKey.findProgramAddressSync(
@@ -47,7 +47,12 @@ const mintItemCollectionLogic = async (
 
   const itemATA = (await getOrCreateAssociatedTokenAccount(connection, SIGNER, itemMintKey, game.gamePdaAddress, true)).address;
 
-  const ix = await program.methods.mintItemCollection(new BN(gameId.toString()), metadata).accounts({
+  const ix = await program.methods.mintItemCollection(new BN(gameId.toString()), {
+    name: item.name,
+    uri: item.uri,
+    symbol: item.symbol,
+    itemId: new BN(item.itemId.toString())
+  }).accounts({
     signer: SIGNER.publicKey,
     systemProgram: web3.SystemProgram.programId,
     game: game.gamePdaAddress,

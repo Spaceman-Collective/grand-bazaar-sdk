@@ -10,7 +10,6 @@ import { createTree, mplBubblegum , MPL_BUBBLEGUM_PROGRAM_ID} from '@metaplex-fo
 
 import { SPL_ACCOUNT_COMPRESSION_PROGRAM_ID, SPL_NOOP_PROGRAM_ID } from "@solana/spl-account-compression";
 import { MintedCollection } from "./types";
-import { PROGRAM_ID } from "..";
 
 interface MintItemAccountTypes {
     connection: web3.Connection,
@@ -45,11 +44,9 @@ const mintItemAccountLogic = async (
     });
     await builder.sendAndConfirm(umi);
 
-    // console.log("Merkle Tree:", merkleTree.publicKey);
-
     const [treeAuthority, _bump] = PublicKey.findProgramAddressSync(
         [new PublicKey(merkleTree.publicKey).toBuffer()],
-        new PublicKey(PROGRAM_ID),
+        new PublicKey(MPL_BUBBLEGUM_PROGRAM_ID.toString()),
     );
 
     const gamePdaAddress = web3.PublicKey.findProgramAddressSync(
@@ -99,6 +96,7 @@ const mintItemAccountLogic = async (
     // console.log(await connection.simulateTransaction(tx));
     const txSig = await connection.sendTransaction(tx);
     // console.log("TX SIG: ", txSig);
+    return true;
 };
 
 export default mintItemAccountLogic;

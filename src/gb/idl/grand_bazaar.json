@@ -258,12 +258,6 @@
       ],
       "args": [
         {
-          "name": "metadata",
-          "type": {
-            "defined": "MetadataArgs"
-          }
-        },
-        {
           "name": "amtInc",
           "type": "u64"
         }
@@ -343,6 +337,10 @@
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "itemId",
+            "type": "u64"
+          },
           {
             "name": "name",
             "type": "string"

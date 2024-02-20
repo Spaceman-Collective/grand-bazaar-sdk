@@ -2,6 +2,7 @@ import { BN, Program, web3 } from "@coral-xyz/anchor";
 import { GrandBazaar } from "../gb/types/grand_bazaar";
 import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID, createMint, getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 import { MPL_TOKEN_METADATA_PROGRAM_ID } from "@metaplex-foundation/mpl-token-metadata";
+import { InitializedGameType } from "./types";
 
 interface InitializeGameTypes {
     connection: web3.Connection,
@@ -19,6 +20,7 @@ const initializeGameLogic = async (
         [Buffer.from("game"), gameIdBuffer],
         program.programId
     )[0];
+
     const SIGNER = web3.Keypair.fromSecretKey(signerBuffer);
     const gameMintKey = await createMint(connection, SIGNER, gamePdaAddress, gamePdaAddress, 0);
     const gameATA = (await getOrCreateAssociatedTokenAccount(connection, SIGNER, gameMintKey, gamePdaAddress, true)).address;
@@ -49,6 +51,7 @@ const initializeGameLogic = async (
         uri: "https://example.com/game_metadata.json"
     };
 
+
     const ix = await program.methods.initGame(metadata).accounts({
         signer: SIGNER.publicKey,
         systemProgram: web3.SystemProgram.programId,
@@ -68,8 +71,6 @@ const initializeGameLogic = async (
     const { blockhash } =
         await connection.getLatestBlockhash();
 
-    console.log("retreived blockhash");
-
     const msg = new web3.TransactionMessage({
         payerKey: SIGNER.publicKey,
         recentBlockhash: blockhash,
@@ -83,7 +84,7 @@ const initializeGameLogic = async (
     const txSig = await connection.sendTransaction(tx)
     // console.log("TX SIG: ", txSig);
     // console.log("Game Master Edition: ", masterEditionAccountAddress.toString());
-    return { gameMintKey, gameATA, gamePdaAddress };
+    return { gameMintKey, gameATA, gamePdaAddress } as InitializedGameType;
 }
 
 export default initializeGameLogic;  

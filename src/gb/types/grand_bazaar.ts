@@ -258,12 +258,6 @@ export type GrandBazaar = {
       ],
       "args": [
         {
-          "name": "metadata",
-          "type": {
-            "defined": "MetadataArgs"
-          }
-        },
-        {
           "name": "amtInc",
           "type": "u64"
         }
@@ -343,6 +337,10 @@ export type GrandBazaar = {
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "itemId",
+            "type": "u64"
+          },
           {
             "name": "name",
             "type": "string"
@@ -635,12 +633,6 @@ export const IDL: GrandBazaar = {
       ],
       "args": [
         {
-          "name": "metadata",
-          "type": {
-            "defined": "MetadataArgs"
-          }
-        },
-        {
           "name": "amtInc",
           "type": "u64"
         }
@@ -720,6 +712,10 @@ export const IDL: GrandBazaar = {
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "itemId",
+            "type": "u64"
+          },
           {
             "name": "name",
             "type": "string"

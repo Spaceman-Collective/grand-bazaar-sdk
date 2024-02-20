@@ -75,6 +75,3 @@ export default class GB {
     
 }
 
-// initialize the collection, and return required variables
-
-// initialize an account for the collection and return the required variables
