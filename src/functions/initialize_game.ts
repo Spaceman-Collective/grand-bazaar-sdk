@@ -3,19 +3,21 @@ import { GrandBazaar } from "../gb/types/grand_bazaar";
 import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID, createMint, getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 import { MPL_TOKEN_METADATA_PROGRAM_ID } from "@metaplex-foundation/mpl-token-metadata";
 import { InitializedGameType } from "./types";
+const { serializeUint64, ByteifyEndianess } = require("byteify");
+
 
 interface InitializeGameTypes {
     connection: web3.Connection,
     signerBuffer: Uint8Array,
     program: Program<GrandBazaar>,
     MPLProgram: web3.PublicKey,
-    gameIdBuffer: Uint8Array,
     gameId: bigint
 }
 
 const initializeGameLogic = async (
-    { connection, signerBuffer, program, MPLProgram, gameIdBuffer, gameId }: InitializeGameTypes) => {
+    { connection, signerBuffer, program, MPLProgram, gameId }: InitializeGameTypes) => {
     await new Promise((resolve) => setTimeout(resolve, 5000)); //wait for airdrop to go through
+    const gameIdBuffer = Uint8Array.from(serializeUint64(gameId, { endianess: ByteifyEndianess.LITTLE_ENDIAN }));
     const gamePdaAddress = web3.PublicKey.findProgramAddressSync(
         [Buffer.from("game"), gameIdBuffer],
         program.programId
@@ -84,7 +86,7 @@ const initializeGameLogic = async (
     const txSig = await connection.sendTransaction(tx)
     // console.log("TX SIG: ", txSig);
     // console.log("Game Master Edition: ", masterEditionAccountAddress.toString());
-    return { gameMintKey, gameATA, gamePdaAddress } as InitializedGameType;
+    return { gameMintKey, gameATA, gamePdaAddress, gameId, gameIdBuffer } as InitializedGameType;
 }
 
 export default initializeGameLogic;  

@@ -10,7 +10,6 @@ interface MintItemCollection {
   signerBuffer: Uint8Array,
   program: Program<GrandBazaar>,
   MPLProgram: web3.PublicKey,
-  gameId: bigint,
   game: InitializedGameType,
   item: {
     itemId: bigint,
@@ -21,7 +20,7 @@ interface MintItemCollection {
 }
 
 const mintItemCollectionLogic = async (
-  { connection, signerBuffer, game, MPLProgram, program, gameId, item }: MintItemCollection
+  { connection, signerBuffer, game, MPLProgram, program, item }: MintItemCollection
 ) => {
   const SIGNER = web3.Keypair.fromSecretKey(signerBuffer);
 
@@ -47,7 +46,7 @@ const mintItemCollectionLogic = async (
 
   const itemATA = (await getOrCreateAssociatedTokenAccount(connection, SIGNER, itemMintKey, game.gamePdaAddress, true)).address;
 
-  const ix = await program.methods.mintItemCollection(new BN(gameId.toString()), {
+  const ix = await program.methods.mintItemCollection(new BN(game.gameId.toString()), {
     name: item.name,
     uri: item.uri,
     symbol: item.symbol,

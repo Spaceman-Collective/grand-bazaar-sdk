@@ -8,10 +8,9 @@ import {describe, expect, test} from '@jest/globals';
 const connection = new web3.Connection("http://localhost:8899", "confirmed");
 const SIGNER = Uint8Array.from(JSON.parse(readFileSync('./keypairs/testing_pair.json').toString()));
 connection.requestAirdrop(web3.Keypair.fromSecretKey(SIGNER).publicKey, 100 * web3.LAMPORTS_PER_SOL);
-
+const gameId = randomU64();
 
 const marketplace = new GB({
-    gameId: randomU64(),
     connection,
     signer: SIGNER
 });
@@ -22,7 +21,7 @@ describe("grand_bazaar", () => {
     let collection: MintedCollection;
 
     test("initializes a game", async () => {
-        game = await marketplace.initializeGame();        
+        game = await marketplace.initializeGame({ gameId });        
         expect(game).toBeTruthy();
         // could add more rigorous tests, but not necessary
         return game;
@@ -38,10 +37,14 @@ describe("grand_bazaar", () => {
     }, 10000);
 
     test("mint item account", async () => {
-        const itemAccount  = await marketplace.mintItemAccount({collection, accountData: {
-            itemCollection: "sword",
-            amount: "123"
-        }});
+        const itemAccount  = await marketplace.mintItemAccount({
+            gameId,
+            collection,
+            accountData: {
+                itemCollection: "sword",
+                amount: "123"
+            }
+        });
         expect(itemAccount).toBeTruthy();
         return itemAccount;
     }, 10000);

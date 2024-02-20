@@ -2,9 +2,12 @@ import { web3 } from '@coral-xyz/anchor';
 import { Account } from '@solana/spl-token';
 
 export interface ISDKProps {
-    gameId: bigint,
     connection: web3.Connection
     signer: Uint8Array
+}
+
+export interface InitializeGameProps {
+    gameId: bigint
 }
 
 export interface MintItemCollectionProps {
@@ -12,6 +15,7 @@ export interface MintItemCollectionProps {
         gamePdaAddress: web3.PublicKey,
         gameMintKey: web3.PublicKey,
         gameATA: web3.PublicKey
+        gameId: bigint,
     },
     item: {
         itemId: bigint,
@@ -30,5 +34,6 @@ export interface MintItemAccountProps {
     accountData: {
         itemCollection: string,
         amount: string
-    }
+    },
+    gameId: bigint,
 }

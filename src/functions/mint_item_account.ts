@@ -10,12 +10,12 @@ import { createTree, mplBubblegum , MPL_BUBBLEGUM_PROGRAM_ID} from '@metaplex-fo
 
 import { SPL_ACCOUNT_COMPRESSION_PROGRAM_ID, SPL_NOOP_PROGRAM_ID } from "@solana/spl-account-compression";
 import { MintedCollection } from "./types";
+const { serializeUint64, ByteifyEndianess } = require("byteify");
 
 interface MintItemAccountTypes {
     connection: web3.Connection,
     signerBuffer: Uint8Array,
     program: Program<GrandBazaar>,
-    gameIdBuffer: Uint8Array,
     gameId: bigint,
     collection: MintedCollection,
     accountData: {
@@ -27,8 +27,9 @@ interface MintItemAccountTypes {
 const DEFAULT_BUBBLEGUM_SIGNER = "4ewWZC5gT6TGpm5LZNDs9wVonfUT2q5PP5sc9kVbwMAK";
 
 const mintItemAccountLogic = async (
-    { connection, signerBuffer, program, collection, gameIdBuffer, gameId, accountData }: MintItemAccountTypes) => {
+    { connection, signerBuffer, program, collection, gameId, accountData }: MintItemAccountTypes) => {
     const SIGNER = web3.Keypair.fromSecretKey(signerBuffer);
+    const gameIdBuffer = Uint8Array.from(serializeUint64(gameId, { endianess: ByteifyEndianess.LITTLE_ENDIAN }));
     
     const umi = createUmi(connection).use(mplBubblegum());
     const myKeypair = umi.eddsa.createKeypairFromSecretKey(signerBuffer);
