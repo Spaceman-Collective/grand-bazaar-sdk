@@ -1,0 +1,33 @@
+{
+  "name": "gb-lib",
+  "version": "1.0.13",
+  "description": "Package implementing functionality of grand-bazaar",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "files": [
+    "build",
+    "README.md"
+  ],
+  "author": "Amritpal",
+  "license": "ISC",
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.29.0",
+    "@metaplex-foundation/mpl-bubblegum": "^3.1.2",
+    "@metaplex-foundation/mpl-token-metadata": "^3.2.0",
+    "@metaplex-foundation/umi": "^0.9.1",
+    "@metaplex-foundation/umi-bundle-defaults": "^0.9.1",
+    "@solana/spl-account-compression": "^0.2.0",
+    "@solana/spl-token": "^0.4.0",
+    "@types/node": "^20.11.19",
+    "bn.js": "^5.2.1",
+    "bottleneck": "^2.19.5",
+    "byteify": "^4.1.4"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.1.5",
+    "typescript": "^5.3.3"
+  }
+}
