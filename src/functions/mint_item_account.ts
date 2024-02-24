@@ -10,6 +10,7 @@ import { createTree, mplBubblegum , MPL_BUBBLEGUM_PROGRAM_ID} from '@metaplex-fo
 
 import { SPL_ACCOUNT_COMPRESSION_PROGRAM_ID, SPL_NOOP_PROGRAM_ID } from "@solana/spl-account-compression";
 import { MintedCollection } from "./types";
+import lightDasApi from "../axios/lightdas";
 const { serializeUint64, ByteifyEndianess } = require("byteify");
 
 interface MintItemAccountTypes {
@@ -45,6 +46,11 @@ const mintItemAccountLogic = async (
     });
     await builder.sendAndConfirm(umi);
 
+    // add merkle tree to lightdas for monitoring
+    await lightDasApi.post('/addMerkleTree', {
+        tree: new PublicKey(merkleTree.publicKey)
+    });
+
     const [treeAuthority, _bump] = PublicKey.findProgramAddressSync(
         [new PublicKey(merkleTree.publicKey).toBuffer()],
         new PublicKey(MPL_BUBBLEGUM_PROGRAM_ID.toString()),
@@ -64,6 +70,9 @@ const mintItemAccountLogic = async (
     if (init_data.length > 199) {
         throw new Error("init_data exceeds the maximum allowed length.");
     }
+
+    console.log("tree auth: ", treeAuthority);
+    console.log("tree address: ", merkleTree.publicKey);
 
     const ix = await program.methods.mintItemAccount(new BN(gameId.toString()), Buffer.from(init_data)).accounts({
         signer: SIGNER.publicKey,

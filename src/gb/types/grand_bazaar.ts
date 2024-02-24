@@ -254,11 +254,82 @@ export type GrandBazaar = {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "game",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "merkleTree",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "logWrapper",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "splCompression",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "bubblegumProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treeAuthority",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gameCollectionMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "itemCollectionMetadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "accountOwner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mplMetadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "itemCollectionMint",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
         {
-          "name": "amtInc",
+          "name": "itemMetadata",
+          "type": {
+            "defined": "ItemMetadata"
+          }
+        },
+        {
+          "name": "merkleInfo",
+          "type": {
+            "defined": "MerkleInfo"
+          }
+        },
+        {
+          "name": "gameId",
+          "type": "u64"
+        },
+        {
+          "name": "amtIncrement",
           "type": "u64"
         }
       ]
@@ -352,6 +423,52 @@ export type GrandBazaar = {
           {
             "name": "uri",
             "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MerkleInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "merkleTree",
+            "type": "publicKey"
+          },
+          {
+            "name": "root",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "leaf",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "nonce",
+            "type": "u64"
+          },
+          {
+            "name": "index",
+            "type": "u32"
+          },
+          {
+            "name": "proofIndexStart",
+            "type": "u8"
+          },
+          {
+            "name": "proofIndexEnd",
+            "type": "u8"
           }
         ]
       }
@@ -629,11 +746,82 @@ export const IDL: GrandBazaar = {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "game",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "merkleTree",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "logWrapper",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "splCompression",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "bubblegumProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treeAuthority",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gameCollectionMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "itemCollectionMetadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "accountOwner",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mplMetadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "itemCollectionMint",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
         {
-          "name": "amtInc",
+          "name": "itemMetadata",
+          "type": {
+            "defined": "ItemMetadata"
+          }
+        },
+        {
+          "name": "merkleInfo",
+          "type": {
+            "defined": "MerkleInfo"
+          }
+        },
+        {
+          "name": "gameId",
+          "type": "u64"
+        },
+        {
+          "name": "amtIncrement",
           "type": "u64"
         }
       ]
@@ -727,6 +915,52 @@ export const IDL: GrandBazaar = {
           {
             "name": "uri",
             "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MerkleInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "merkleTree",
+            "type": "publicKey"
+          },
+          {
+            "name": "root",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "leaf",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "nonce",
+            "type": "u64"
+          },
+          {
+            "name": "index",
+            "type": "u32"
+          },
+          {
+            "name": "proofIndexStart",
+            "type": "u8"
+          },
+          {
+            "name": "proofIndexEnd",
+            "type": "u8"
           }
         ]
       }
